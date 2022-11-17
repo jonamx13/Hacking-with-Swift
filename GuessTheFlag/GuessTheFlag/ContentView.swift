@@ -9,38 +9,44 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var showingScore = false
-    @State private var score = 0
+    @State private var scoreWrong = 0
+    @State private var scoreCorrect = 0
     @State private var scoreTitle = ""
-    @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Monaco", "Nigeria", "Poland", "Russia", "Spain", "UK", "US"].shuffled()
+    @State private var houses = ["Arryn", "Baratheon", "Greyjoy", "Lannister", "Martell", "Stark", "Targaryen", "Tully", "Tyrell"].shuffled()
     @State private var correctAnswer = Int.random(in: 0...2)
+    
+    var gold = #colorLiteral(red:0.9882352941, green: 0.7607843137, blue: 0, alpha: 1)
     
     var body: some View {
         ZStack {
-            RadialGradient(stops: [
-                .init(color: Color(red: 0.1, green: 0.2, blue: 0.45), location: 0.3),
-                .init(color: Color(red: 0.76, green: 0.15, blue: 0.26), location: 0.3)
-            ], center: .top, startRadius: 200, endRadius: 700)
-            .ignoresSafeArea()
+            ZStack {
+                Image("background")
+                    .resizable()
+                    .mask(LinearGradient(gradient: Gradient(colors: [.clear, .black, .black, .clear]), startPoint: .top, endPoint: .bottom))
+            }
+            
             
             VStack {
                 Spacer()
-                Text("Guess the flag")
-                    .font(.largeTitle.bold())
-                    .foregroundColor(.white)
-                VStack(spacing: 15) {
+                LinearGradient(gradient: Gradient(colors: [.yellow, .brown]), startPoint: .top, endPoint: .bottom)
+                    .frame(maxHeight: 40)
+                    .mask(Text("Guess The House")
+                        .font(.custom("Game of Thrones", size: 32)))
+                
+                VStack(spacing: 20) {
                     VStack {
-                        Text("Tap the flag of")
+                        Text("TAP THE FLAG OF")
                             .foregroundStyle(.secondary)
-                            .font(.subheadline.weight(.heavy))
-                        Text(countries[correctAnswer])
-                            .font(.largeTitle.weight(.semibold))
+                            .font(.custom("TrajanPro-Bold", size: 18))
+                        Text(houses[correctAnswer])
+                            .font(.custom("Game of Thrones", size: 25))
                     }
                     
                     ForEach(0..<3) { number in
                         Button {
                             flagTapped(number)
                         } label: {
-                            Image(countries[number])
+                            Image(houses[number])
                                 .renderingMode(.original)
                                 .clipShape(Capsule())
                                 .shadow(radius: 5)
@@ -49,39 +55,54 @@ struct ContentView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 20)
-                .background(.thinMaterial)
+                .background(.ultraThinMaterial.opacity(0.7))
                 .clipShape(RoundedRectangle(cornerRadius: 20))
+                .shadow(radius: 10)
                 
                 Spacer()
                 Spacer()
                 
-                Text("Your score: \(score)")
+                Text("Correct: \(scoreCorrect)")
+                    .foregroundColor(.yellow)
+                    .font(.custom("TrajanPro-Bold", size: 30))
+                Text("Wrong: \(scoreWrong)")
                     .foregroundColor(.white)
-                    .font(.title.bold())
+                    .font(.custom("TrajanPro-Bold", size: 30))
                 
                 Spacer()
             }
             .padding()
         }
         .alert(scoreTitle, isPresented: $showingScore) {
-            Button("Continue", action: askQuestion)
+            Button("Continue", role: .cancel, action: askQuestion)
+            Button("Drakarys", role: .destructive, action: resetScore)
         } message: {
-            Text("Your score is \(score)")
+            Text("Your score is \(scoreCorrect)")
         }
+        .environment(\.colorScheme, .dark)
     }
+    
     func flagTapped(_ number: Int) {
         if number == correctAnswer {
-            score += 1
+            scoreCorrect += 1
             scoreTitle = "Correct"
         } else {
+            scoreWrong += 1
             scoreTitle = "Wrong"
         }
         showingScore = true
     }
     
     func askQuestion() {
-        countries.shuffle()
+        houses.shuffle()
         correctAnswer = Int.random(in: 0...2)
+    }
+    
+    func resetScore() {
+        houses.shuffle()
+        correctAnswer = Int.random(in: 0...2)
+        scoreCorrect = 0
+        scoreWrong = 0
     }
 }
 

@@ -11,6 +11,8 @@
 		6B2A84D0291F334E0023F64B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B2A84CF291F334E0023F64B /* ContentView.swift */; };
 		6B2A84D2291F336E0023F64B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B2A84D1291F336E0023F64B /* Assets.xcassets */; };
 		6B2A84D5291F336E0023F64B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6B2A84D4291F336E0023F64B /* Preview Assets.xcassets */; };
+		6B4C0FC929260430002A016F /* TrajanPro-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6B4C0FC729260430002A016F /* TrajanPro-Bold.otf */; };
+		6B4C0FCA29260431002A016F /* Game of Thrones.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6B4C0FC829260430002A016F /* Game of Thrones.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +21,9 @@
 		6B2A84CF291F334E0023F64B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		6B2A84D1291F336E0023F64B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6B2A84D4291F336E0023F64B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		6B4C0FC729260430002A016F /* TrajanPro-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "TrajanPro-Bold.otf"; path = "fonts/TrajanPro-Bold.otf"; sourceTree = SOURCE_ROOT; };
+		6B4C0FC829260430002A016F /* Game of Thrones.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Game of Thrones.ttf"; path = "fonts/Game of Thrones.ttf"; sourceTree = SOURCE_ROOT; };
+		6B4C0FCB29260657002A016F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +56,8 @@
 		6B2A84CC291F334E0023F64B /* GuessTheFlag */ = {
 			isa = PBXGroup;
 			children = (
+				6B4C0FCB29260657002A016F /* Info.plist */,
+				6B4C0FC6292603CA002A016F /* Fonts */,
 				6B2A84CD291F334E0023F64B /* GuessTheFlagApp.swift */,
 				6B2A84CF291F334E0023F64B /* ContentView.swift */,
 				6B2A84D1291F336E0023F64B /* Assets.xcassets */,
@@ -65,6 +72,15 @@
 				6B2A84D4291F336E0023F64B /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		6B4C0FC6292603CA002A016F /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				6B4C0FC829260430002A016F /* Game of Thrones.ttf */,
+				6B4C0FC729260430002A016F /* TrajanPro-Bold.otf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -126,7 +142,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				6B2A84D5291F336E0023F64B /* Preview Assets.xcassets in Resources */,
+				6B4C0FCA29260431002A016F /* Game of Thrones.ttf in Resources */,
 				6B2A84D2291F336E0023F64B /* Assets.xcassets in Resources */,
+				6B4C0FC929260430002A016F /* TrajanPro-Bold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,11 +287,13 @@
 				DEVELOPMENT_ASSET_PATHS = "\"GuessTheFlag/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GuessTheFlag/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -297,11 +317,13 @@
 				DEVELOPMENT_ASSET_PATHS = "\"GuessTheFlag/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GuessTheFlag/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
