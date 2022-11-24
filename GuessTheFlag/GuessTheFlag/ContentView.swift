@@ -19,6 +19,22 @@ struct FlagImage: View {
     
 }
 
+struct titleMask: ViewModifier {
+    var title: String
+    
+    func body(content: Content) -> some View {
+        content
+        .mask(Text(title)
+            .font(.custom("Game of Thrones", size: 32)))
+    }
+}
+
+extension View {
+    func titleMasked(with title: String) -> some View{
+        modifier(titleMask(title: title))
+    }
+}
+
 struct ContentView: View {
     //Score variables
     @State private var showingScore: Bool = false
@@ -47,8 +63,8 @@ struct ContentView: View {
                 Spacer()
                 LinearGradient(gradient: Gradient(colors: [.yellow, .brown]), startPoint: .top, endPoint: .bottom)
                     .frame(maxHeight: 40)
-                    .mask(Text("Guess The House")
-                        .font(.custom("Game of Thrones", size: 32)))
+                    .titleMasked(with: "Guess the house")
+                    
                 // Title
                 
                 VStack(spacing: 20) {
