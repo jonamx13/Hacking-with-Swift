@@ -37,23 +37,26 @@ struct ContentView: View {
         .currency(code: Locale.current.currencyCode ?? "USD")
     }
     
-    
     init() {
         UISegmentedControl.appearance().selectedSegmentTintColor = .systemCyan
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
     }
+    var amountText: some View {
+        TextField("Amount", value: $checkAmount, format: currencyFormatter)
+            .keyboardType(.decimalPad)
+            .focused($amountIsFocused)
+            .foregroundColor(checkAmount == 0.0 ? .red :
+                                darkMode ? .white: .black)
+            .multilineTextAlignment(.trailing)
+            .font(.system(size: 30))
+    }
     
     var body: some View {
+        
         NavigationView {
             Form {
                 Section {
-                    TextField("Amount", value: $checkAmount, format: currencyFormatter)
-                        .keyboardType(.decimalPad)
-                        .focused($amountIsFocused)
-                    
-                        .multilineTextAlignment(.trailing)
-                        .font(.system(size: 30))
-                    
+                    amountText
                     Picker("Number of people", selection: $numberOfPeople) {
                         ForEach(2..<100) {
                             Text("\($0) people")
@@ -63,11 +66,21 @@ struct ContentView: View {
                 // Section 1: Total & number or people
                 
                 Section {
-                    Picker("Tip percentage", selection: $tipPercentage) {
-                        ForEach(tipPercentages, id:\.self) {
-                            Text($0, format: .percent)
-                        }
-                    }.pickerStyle(.segmented)
+                    if tipPercentage == 0 {
+                        Picker("Tip percentage", selection: $tipPercentage) {
+                            ForEach(tipPercentages, id:\.self) {
+                                Text($0, format: .percent)
+                            }
+                        }.pickerStyle(.segmented)
+                            .colorMultiply(.red)
+                    } else {
+                        Picker("Tip percentage", selection: $tipPercentage) {
+                            ForEach(tipPercentages, id:\.self) {
+                                Text($0, format: .percent)
+                            }
+                        }.pickerStyle(.segmented)
+                            
+                    }
 
                 } header: {
                     Text("How much tip do you want to leave?")
