@@ -1,8 +1,8 @@
 //
 //  ContentView.swift
-//  ViewsAndModifiers
+//  rock paper scissors
 //
-//  Created by CGTI9 on 22/11/22.
+//  Created by CGTI9 on 28/11/22.
 //
 
 import SwiftUI
