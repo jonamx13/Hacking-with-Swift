@@ -8,57 +8,33 @@
 import CoreML
 import SwiftUI
 
+struct CenterText: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .frame(maxWidth: .infinity,alignment: .center)
+    }
+}
+
+extension View {
+    func centerTitle() -> some View {
+        modifier(CenterText())
+    }
+}
+
 struct ContentView: View {
     @State private var wakeUp = defaultWakeTime
     @State private var sleepAmount = 8.0
-    @State private var coffeeAmount = 1
-    
-    @State private var alertTitle = ""
-    @State private var alertMessage = ""
-    @State private var showingAlert = false
-    
+    @State private var coffeeAmount = 0
+        
     static var defaultWakeTime: Date {
         var components = DateComponents()
         components.hour = 7
         components.minute = 0
         return Calendar.current.date(from: components) ?? Date.now
     }
-
-    var body: some View {
-        NavigationView {
-            Form {
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("When do you want to wake up?")
-                        .font(.headline)
-                    DatePicker("Please enter a date", selection: $wakeUp, displayedComponents: .hourAndMinute)
-                        .labelsHidden()
-                }
-                
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("Desired amount of sleep")
-                        .font(.headline)
-                    Stepper("\(sleepAmount.formatted()) hours", value: $sleepAmount, in: 4...12, step: 0.25)
-                }
-                
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("Daily coffee intake")
-                        .font(.headline)
-                    Stepper(coffeeAmount == 1 ? "1 cup" : "\(coffeeAmount) cups", value: $coffeeAmount, in: 1...20)
-                }
-            }
-            .navigationTitle("BetterRest")
-            .toolbar {
-                Button("Calculate", action: calculateBedTime)
-            }
-            .alert(alertTitle, isPresented: $showingAlert) {
-                Button("OK") { }
-            } message: {
-                Text(alertMessage)
-            }
-            // Form
-        }// NavigationView
-    }// View
-    func calculateBedTime() {
+    
+    var idealBedTime: String {
+        var idealBedTime = ""
         do {
             let config = MLModelConfiguration()
             let model = try SleepCalculator(configuration: config)
@@ -70,15 +46,63 @@ struct ContentView: View {
             let prediction = try model.prediction(wake: Double(hour + minute), estimatedSleep: sleepAmount, coffee: Double(coffeeAmount))
             
             let sleepTime = wakeUp - prediction.actualSleep
-            alertTitle = "You ideal bedtime is_"
-            alertMessage = sleepTime.formatted(date: .omitted, time: .shortened)
+            idealBedTime = sleepTime.formatted(date: .omitted, time: .shortened)
+            return idealBedTime
         } catch {
-            alertTitle = "Error"
-            alertMessage = "Sorry, there was a problem calculating your bedtime"
+            idealBedTime = "Sorry, there was a problem calculating your bedtime"
+            return idealBedTime
         }
-        
-        showingAlert = true
     }
+    //App beggining
+    var body: some View {
+        NavigationView {
+            Form {
+                //Clock
+                Section {
+                    DatePicker("Please enter an hour", selection: $wakeUp, displayedComponents: .hourAndMinute)
+                        .labelsHidden()
+                        .centerTitle()
+                } header: {
+                    Text("When do you want to wake up?")
+                        .font(.headline)
+                }
+                .listRowBackground(Color.clear)
+                
+                //Hours desired
+                Section {
+                    Stepper("\(sleepAmount.formatted()) hours", value: $sleepAmount, in: 4...12, step: 0.25)
+                } header: {
+                    Text("Desired amount of sleep")
+                        .font(.headline)
+                }
+                
+                //Amount of coffee
+                Section {
+                    Picker("", selection: $coffeeAmount) {
+                        ForEach(1..<21) {
+                            Text("\($0) cup")
+                        }
+                    }
+                } header: {
+                    Text("Daily coffee intake")
+                        .font(.headline)
+                }
+                
+                //Ideal bedtime
+                Section {
+                    Text(idealBedTime)
+                        .font(.system(size: 30))
+                        .foregroundColor(Color.blue)
+                } header: {
+                    Text("You ideal bedtime is...")
+                        .font(.headline)
+                }
+                .listRowBackground(Color.clear)
+                .centerTitle()            }
+            .navigationTitle("BetterRest")
+            // Form
+        }// NavigationView
+    }// View
 }
 
 struct ContentView_Previews: PreviewProvider {
