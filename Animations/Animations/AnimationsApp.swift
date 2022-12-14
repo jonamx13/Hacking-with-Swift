@@ -1,14 +1,14 @@
 //
-//  WordScrambleApp.swift
-//  WordScramble
+//  AnimationsApp.swift
+//  Animations
 //
-//  Created by CGTI9 on 08/12/22.
+//  Created by CGTI9 on 13/12/22.
 //
 
 import SwiftUI
 
 @main
-struct WordScrambleApp: App {
+struct AnimationsApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
